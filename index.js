@@ -28,15 +28,22 @@ const result = document.getElementById('resultado')
     }
 }
 
+const pegarIdiomaOriginal = (idioma) => {
 
+}
+const pegarIdiomaFinal = (idioma) =>{
+    const to = idioma
+}
+
+const inverterIdiomas = () =>{
+
+}
    
 const traduzir = async () =>{
 
     const texto = textoInput.value
-    
     const fromLanguage = 'pt'
     const toLanguage = 'en'
-
     const traduzido = await loadTranslation(fromLanguage, toLanguage, texto)
 
     result.value = traduzido
@@ -52,3 +59,11 @@ const changeTheme = document.getElementById('ChangeTheme')
 changeTheme.addEventListener('click', darkTheme)
 
 console.log(getLanguages())
+
+getLanguages().then(data =>{
+    const listaDeIdiomas = Object.entries(data)
+    listaDeIdiomas.forEach(idioma =>{
+        console.log(idioma)
+    })
+})
+
