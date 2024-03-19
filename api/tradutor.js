@@ -46,7 +46,7 @@ export async function loadTranslation(from, to, text){
     const translatedText = await translate(from, to, text).then(data => {
         const translated = data[0].translations[0].text
         return translated
-    })
+})
 
     return translatedText
 }
