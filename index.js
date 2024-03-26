@@ -6,12 +6,14 @@ import { getLanguages, loadTranslation } from "./api/tradutor.js";
 const textoInput = document.getElementById('texto')
 const result = document.getElementById('resultado')
 
+let idiomaOriginal = 'pt'
+let idiomaFinal = 'en'
 //TRADUZIR
 const traduzir = async () =>{
 
     const texto = textoInput.value
-    const fromLanguage = 'pt'
-    const toLanguage = 'en'
+    const fromLanguage = idiomaOriginal
+    const toLanguage = idiomaFinal
     const traduzido = await loadTranslation(fromLanguage, toLanguage, texto)
 
     result.value = traduzido 
@@ -30,7 +32,10 @@ const listarIdiomasOriginais = (idioma) =>{
 
     idiomaListado.addEventListener('click', () =>{
         pegarIdiomaOriginal(idioma)
+        listaCima.classList.remove('mostrar')
     })
+
+
 }
 dropdowns[0].addEventListener('click', () =>{
     listaCima.classList.toggle('mostrar')
@@ -46,6 +51,7 @@ const listarIdiomasFinais = (idioma) =>{
 
     idiomaListado.addEventListener('click', () =>{
         pegarIdiomaFinal(idioma)
+        listaBaixo.classList.remove('mostrar')
     })
 }
 dropdowns[1].addEventListener('click', () => {
@@ -55,11 +61,11 @@ dropdowns[1].addEventListener('click', () => {
 
 const pegarIdiomaOriginal = (idioma) => {
 
-    let idiomaOriginal = idioma[0]
+    idiomaOriginal = idioma[0]
     return idiomaOriginal
 }
 const pegarIdiomaFinal = (idioma) =>{
-    const idiomaFinal = idioma[0]
+    idiomaFinal = idioma[0]
     return idiomaFinal
 }
 
