@@ -1,13 +1,18 @@
 'use strict'
 
+//importar as funções
 import { getLanguages, loadTranslation } from "./api/tradutor.js";
 
-//inputs importantes
+//inputs importantes -> o do texto escrito e do resultado da tradução
 const textoInput = document.getElementById('texto')
 const result = document.getElementById('resultado')
 
+//variáveis pra definir os idiomas padrão
 let idiomaOriginal = 'pt'
 let idiomaFinal = 'en'
+
+
+
 //TRADUZIR
 const traduzir = async () =>{
 
@@ -18,11 +23,20 @@ const traduzir = async () =>{
 
     result.value = traduzido 
 }
+const mudarBandeiras = () =>{
 
+    const bandeiras = document.querySelectorAll('.bandeira')
+    const bandeiraEntrada = bandeiras[0]
+    const bandeiraSaida = bandeiras[1]
+
+    bandeiraEntrada.src = `./img/${idiomaOriginal}.svg`
+    bandeiraSaida.src = `./img/${idiomaFinal}.svg`
+
+}
+//pega as duas setas para baixo
 const dropdowns = document.querySelectorAll('.seta')
 
-
-
+//lista os idiomas disponíveis para o input de tradução
 const listaCima = document.querySelector('.lista-cima')
 const listarIdiomasOriginais = (idioma) =>{
     const idiomaListado = document.createElement('p')
@@ -30,18 +44,21 @@ const listarIdiomasOriginais = (idioma) =>{
     idiomaListado.textContent = idioma[1].name
     listaCima.appendChild(idiomaListado)
 
+    //ao clicar no idioma da lista, executa a função que pega a sigla e guarda em uma variável
     idiomaListado.addEventListener('click', () =>{
         pegarIdiomaOriginal(idioma)
         listaCima.classList.remove('mostrar')
+        mudarBandeiras()
     })
-
-
 }
+
+//quando clicar na seta do input de cima, irá mostrar a lista de idiomas de entrada e esconder a lista de baixo, caso esteja mostrando
 dropdowns[0].addEventListener('click', () =>{
     listaCima.classList.toggle('mostrar')
-    listabaixo.classList.remove('mostrar')
+    listaBaixo.classList.remove('mostrar')
 })
 
+//lista os idiomas disponíveis para o resultado
 const listaBaixo = document.querySelector('.lista-baixo')
 const listarIdiomasFinais = (idioma) =>{
     const idiomaListado = document.createElement('p')
@@ -49,16 +66,20 @@ const listarIdiomasFinais = (idioma) =>{
     idiomaListado.textContent = idioma[1].name
     listaBaixo.appendChild(idiomaListado)
 
+    //ao clicar no idioma da lista, executa a função que pega a sigla e guarda em uma variável
     idiomaListado.addEventListener('click', () =>{
         pegarIdiomaFinal(idioma)
         listaBaixo.classList.remove('mostrar')
+        mudarBandeiras()
     })
 }
+//quando clicar na seta do input de cima, irá mostrar a lista de idiomas de saída e esconder a lista de cima, caso esteja mostrando
 dropdowns[1].addEventListener('click', () => {
     listaBaixo.classList.toggle('mostrar')
     listaCima.classList.remove('mostrar')
 })
 
+//funções para pegar os idiomas escolhidos
 const pegarIdiomaOriginal = (idioma) => {
 
     idiomaOriginal = idioma[0]
@@ -69,20 +90,25 @@ const pegarIdiomaFinal = (idioma) =>{
     return idiomaFinal
 }
 
+//inverter idiomas
 const inverterIdiomas = () =>{
+    
+    //variável para guardar o valor originakl do idioma de entrada
+    let idioma1 = idiomaOriginal
+    //inverter
+    idiomaOriginal = idiomaFinal
+    idiomaFinal = idioma1
+
+    mudarBandeiras()
+    console.log(idiomaOriginal, idiomaFinal)
 }
+//inverte os idiomas ao clicar no botão de inverter
+const botaoInverter = document.getElementById('inverter')
+botaoInverter.addEventListener('click', inverterIdiomas)
+
    
 
-
-// if(conteudoDoTexto.toLowerCase() === "alice"){
-//     darkTheme()
-   
-// }else{
-
-// }
-
-
-//EVENT LISTENER
+//EVENT LISTENER para chamar o resultado com enter
 textoInput.addEventListener('keypress', function (e) {
     const conteudoDoTexto = textoInput.value
     if (e.key ==='Enter'){
@@ -98,10 +124,8 @@ textoInput.addEventListener('keypress', function (e) {
         }
     }
 })
-const changeTheme = document.getElementById('ChangeTheme')
-changeTheme.addEventListener('click', darkTheme)
 
-
+//lista os idiomas
 const listaDeIdiomas = await getLanguages().then(data =>{
     const listaIdiomas = Object.entries(data)
     return listaIdiomas
@@ -122,8 +146,8 @@ function darkTheme () {
 
     const imagem = document.getElementById('ChangeTheme')
     const body = document.getElementById('body')
-
-
+    const setas = document.querySelectorAll('.seta')
+    
 
     if(imagem.src.endsWith("MOON.svg")){
         imagem.src = "./img/SUN.svg"; 
@@ -131,12 +155,21 @@ function darkTheme () {
         body.classList.add('bg-black')
         textoInput.classList.add('txt-white')
         result.classList.add('txt-white')
+        setas[0].src = './img/seta.svg'
+        setas[1].src = './img/seta.svg'
+        botaoInverter.src = './img/inverter-claro.svg'
     }else{
         imagem.src = "./img/MOON.svg";
         body.classList.remove('bg-black')
         body.classList.add('bg-white')
         textoInput.classList.remove('txt-white')
         result.classList.remove('txt-white')
-
+        setas[0].src = './img/dropdown.svg'
+        setas[1].src = './img/dropdown.svg'
+        botaoInverter.src = './img/inverter.svg'
     }
 }
+
+//muda o tema 
+const changeTheme = document.getElementById('ChangeTheme')
+changeTheme.addEventListener('click', darkTheme)

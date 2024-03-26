@@ -14,9 +14,6 @@
   .bg-white{
       background-color: #ffffff;
   }
-  .bg-primario{
-      background-color: #5B0B9B;
-  }
   .txt-black{
     color: #000000;
   }
@@ -63,7 +60,7 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 7rem;
+    gap: 4rem;
 }
 input{
     border: none;
@@ -85,6 +82,11 @@ input{
     border-bottom: solid 3px #828282;
     justify-content: space-between; 
 }
+
+.icon-country img{
+    height: 50px;
+}
+
 input:focus {
     outline: none;
   }
@@ -96,7 +98,7 @@ footer{
     padding-bottom:32px;
 }  
 .seta{
-    height: 6vh;
+    width: 3vh;
 }
 
 .lista-cima{
@@ -119,6 +121,10 @@ footer{
 .lista-cima .idioma-lista{
     padding: 6px 0;
     border-bottom: solid 1px #5B0B9B;
+}
+.lista .idioma-lista:hover{
+    padding-left: 6px;
+    background-color: #b59fc7;
 }
 .mostrar {
     display: block;
@@ -147,4 +153,7 @@ footer{
 }
 .lista-baixo.mostrar{
     display: block;
+}
+#inverter{
+    height: 4vh;
 }
