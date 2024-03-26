@@ -73,10 +73,29 @@ const inverterIdiomas = () =>{
 }
    
 
+
+// if(conteudoDoTexto.toLowerCase() === "alice"){
+//     darkTheme()
+   
+// }else{
+
+// }
+
+
 //EVENT LISTENER
 textoInput.addEventListener('keypress', function (e) {
+    const conteudoDoTexto = textoInput.value
     if (e.key ==='Enter'){
-        traduzir()
+        if(conteudoDoTexto == 'alice'){
+            console.log('owisfodposfosudofuos');
+            
+            darkTheme()
+        } else {
+            console.log(textoInput);
+            
+            console.log(conteudoDoTexto)
+            traduzir()
+        }
     }
 })
 const changeTheme = document.getElementById('ChangeTheme')
