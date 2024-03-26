@@ -11,7 +11,31 @@ const result = document.getElementById('resultado')
 let idiomaOriginal = 'pt'
 let idiomaFinal = 'en'
 
+//////////////////
+//texto para voz
+const synth = window.speechSynthesis;
+function setSpeech() {
+    return new Promise(
+        function (resolve) {
+            let id;
+            id = setInterval(() => {
+                if (synth.getVoices().length !== 0) {
+                    resolve(synth.getVoices());
+                    clearInterval(id);
+                } }, 10);
+        }
+    )
+}
+async function getVoiceList(){
+    let speechs = setSpeech();
+    let voices = speechs.then((voices) => {
+    return voices
+    });    
+    return voices
+}
+let languageVoice
 
+/////////////
 
 //TRADUZIR
 const traduzir = async () =>{
@@ -65,9 +89,23 @@ const listarIdiomasFinais = (idioma) =>{
     idiomaListado.classList.add('idioma-lista')
     idiomaListado.textContent = idioma[1].name
     listaBaixo.appendChild(idiomaListado)
+    
 
     //ao clicar no idioma da lista, executa a função que pega a sigla e guarda em uma variável
-    idiomaListado.addEventListener('click', () =>{
+    idiomaListado.addEventListener('click', async () =>{
+
+        let voices = await getVoiceList()
+        const audio = document.querySelector('.audio')
+        voices.forEach(voice =>{
+            // console.log(voice.name)
+            if(voice.name.toLowerCase().includes(idioma[1].nativeName.toLowerCase()) ){
+                audio.classList.add('mostrar')
+                languageVoice = voice
+                console.log(voice)
+            }else{
+                audio.classList.remove('mostrar')
+            }
+        })
         pegarIdiomaFinal(idioma)
         listaBaixo.classList.remove('mostrar')
         mudarBandeiras()
@@ -108,22 +146,6 @@ botaoInverter.addEventListener('click', inverterIdiomas)
 
    
 
-//EVENT LISTENER para chamar o resultado com enter
-textoInput.addEventListener('keypress', function (e) {
-    const conteudoDoTexto = textoInput.value
-    if (e.key ==='Enter'){
-        if(conteudoDoTexto == 'alice'){
-            console.log('owisfodposfosudofuos');
-            
-            darkTheme()
-        } else {
-            console.log(textoInput);
-            
-            console.log(conteudoDoTexto)
-            traduzir()
-        }
-    }
-})
 
 //lista os idiomas
 const listaDeIdiomas = await getLanguages().then(data =>{
@@ -173,3 +195,32 @@ function darkTheme () {
 //muda o tema 
 const changeTheme = document.getElementById('ChangeTheme')
 changeTheme.addEventListener('click', darkTheme)
+
+
+const getSpeech = async () =>{
+    event.preventDefault();
+  
+    const voices = await getVoiceList()
+    const sendSpeech = new SpeechSynthesisUtterance(result.value);
+    const selectedVoice = languageVoice;
+    for (const voice of voices) {
+      if (voice.name === selectedVoice.name) {
+        sendSpeech.voice = voice;
+      }
+    }
+    synth.speak(sendSpeech);
+
+}
+
+//EVENT LISTENER para chamar o resultado com enter
+textoInput.addEventListener('keypress', function (e) {
+    const conteudoDoTexto = textoInput.value
+    if (e.key ==='Enter'){
+        if(conteudoDoTexto == 'alice'){
+            darkTheme()
+        } else {
+            traduzir()
+            getSpeech()
+        }
+    }
+})    

@@ -157,3 +157,9 @@ footer{
 #inverter{
     height: 4vh;
 }
+.audio {
+    display: none;
+}
+.audio.mostrar{
+    display: flex;
+}
