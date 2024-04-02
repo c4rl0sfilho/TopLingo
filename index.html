@@ -18,22 +18,29 @@
     </header>
     <main>
         <div class="container">
-            <div class="language-brazil">
-                <input type="text" placeholder="Olá Mundo" id="texto">
-                <div class="icon-country">
-                    <img src="./img/pt.svg" onerror="this.src='./img/globo.png';" alt="Flag" id="idiomaOriginal" class="bandeira" id="bandeiraEntrada">
-                    <img src="./img/dropdown.svg" alt="" class="seta">
+            <div>
+                <div class="language-brazil">
+                    <input type="text" placeholder="Olá Mundo" id="texto">
+                    <div class="icon-country">
+                        <img src="./img/pt.svg" onerror="this.src='./img/globo.png';" alt="Flag" id="idiomaOriginal" class="bandeira" id="bandeiraEntrada">
+                        <img src="./img/dropdown.svg" alt="" class="seta">
+                    </div>
                 </div>
+                <p class="nome-idioma">Português</p>
             </div>
             <img src="./img/inverter.svg" alt="Inverter idiomas" id="inverter">
-            <div class="language-usa">
-                <input type="text" placeholder="Hello world" id="resultado" disabled>
-                <div class="icon-country">
-                    <img src="./img/audio.svg" alt="" class="audio">
-                    <img src="./img/en.svg" onerror="this.src='./img/globo.png';" alt="Flag" id="idiomaFinal" class="bandeira" id="bandeiraResultado">
-                    <img src="./img/dropdown.svg" alt="" class="seta">
-                </div>
-            </div>   
+            <div>
+                <div class="language-usa">
+                    <input type="text" placeholder="Hello world" id="resultado" disabled>
+                    <div class="icon-country">
+                        <button class="audio mostrar"><img src="./img/audio.svg"></button>
+                        <img src="./img/en.svg" onerror="this.src='./img/globo.png';" alt="Flag" id="idiomaFinal" class="bandeira" id="bandeiraResultado">
+                        <img src="./img/dropdown.svg" alt="" class="seta">
+                    </div>
+                </div>  
+                <p class="nome-idioma">Inglês</p>
+            </div>
+
         </div>
         <div class="lista-cima lista">  
             <p>IDIOMAS</p>   

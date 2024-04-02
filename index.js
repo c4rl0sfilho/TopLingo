@@ -7,6 +7,8 @@ import { getLanguages, loadTranslation } from "./api/tradutor.js";
 const textoInput = document.getElementById('texto')
 const result = document.getElementById('resultado')
 
+//textos das variaveos
+
 //variáveis pra definir os idiomas padrão
 let idiomaOriginal = 'pt'
 let idiomaFinal = 'en'
@@ -33,8 +35,9 @@ async function getVoiceList(){
     });    
     return voices
 }
-let languageVoice
-
+let GetLanguageVoice = await getVoiceList()
+let languageVoice = GetLanguageVoice[3]
+console.log(languageVoice)
 /////////////
 
 //TRADUZIR
@@ -82,6 +85,9 @@ dropdowns[0].addEventListener('click', () =>{
     listaBaixo.classList.remove('mostrar')
 })
 
+//variavel do botão de audio
+const audio = document.querySelector('.audio')
+
 //lista os idiomas disponíveis para o resultado
 const listaBaixo = document.querySelector('.lista-baixo')
 const listarIdiomasFinais = (idioma) =>{
@@ -93,22 +99,23 @@ const listarIdiomasFinais = (idioma) =>{
 
     //ao clicar no idioma da lista, executa a função que pega a sigla e guarda em uma variável
     idiomaListado.addEventListener('click', async () =>{
-
+        languageVoice = undefined
         let voices = await getVoiceList()
-        const audio = document.querySelector('.audio')
+
+        audio.classList.remove('mostrar')
         voices.forEach(voice =>{
             // console.log(voice.name)
             if(voice.name.toLowerCase().includes(idioma[1].nativeName.toLowerCase()) ){
                 audio.classList.add('mostrar')
                 languageVoice = voice
-                console.log(voice)
             }else{
-                audio.classList.remove('mostrar')
+               
             }
         })
         pegarIdiomaFinal(idioma)
         listaBaixo.classList.remove('mostrar')
         mudarBandeiras()
+        traduzir()
     })
 }
 //quando clicar na seta do input de cima, irá mostrar a lista de idiomas de saída e esconder a lista de cima, caso esteja mostrando
@@ -137,6 +144,10 @@ const inverterIdiomas = () =>{
     idiomaOriginal = idiomaFinal
     idiomaFinal = idioma1
 
+    let textoInvertido = texto.value
+    textoInput.value = result.value
+    result.value = textoInvertido
+
     mudarBandeiras()
     console.log(idiomaOriginal, idiomaFinal)
 }
@@ -157,8 +168,6 @@ listaDeIdiomas.forEach(idioma =>{
    listarIdiomasOriginais(idioma)
    listarIdiomasFinais(idioma)
 })
-
-
 
 
 
@@ -199,17 +208,20 @@ changeTheme.addEventListener('click', darkTheme)
 
 const getSpeech = async () =>{
     event.preventDefault();
-  
+
     const voices = await getVoiceList()
     const sendSpeech = new SpeechSynthesisUtterance(result.value);
     const selectedVoice = languageVoice;
-    for (const voice of voices) {
-      if (voice.name === selectedVoice.name) {
-        sendSpeech.voice = voice;
-      }
-    }
-    synth.speak(sendSpeech);
-
+    if(selectedVoice != undefined){
+        console.log(selectedVoice)
+        voices.forEach(voice =>{
+            if (voice.name === selectedVoice.name) {
+                sendSpeech.voice = voice;
+                synth.speak(sendSpeech);
+              }
+            
+        })
+        }
 }
 
 //EVENT LISTENER para chamar o resultado com enter
@@ -220,7 +232,8 @@ textoInput.addEventListener('keypress', function (e) {
             darkTheme()
         } else {
             traduzir()
-            getSpeech()
         }
     }
 })    
+
+audio.addEventListener('click', getSpeech)

@@ -28,6 +28,7 @@ body{
     width: 100%;
     height: 100%;
     border-left: 10vh solid var(--cor-primaria) ;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
 
 }
 .barra-lateral{
@@ -70,7 +71,7 @@ input{
 .language-brazil{
     display: flex;
     flex-direction: row;
-    width: 450px ;
+    width: 36vw ;
     border-bottom: solid 3px #828282;
     justify-content: space-between;
 
@@ -78,9 +79,15 @@ input{
 .language-usa{
     display: flex;
     flex-direction: row;
-    width: 450px ;
+    width: 36vw;
     border-bottom: solid 3px #828282;
     justify-content: space-between; 
+}
+
+.icon-country {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .icon-country img{
@@ -145,11 +152,11 @@ footer{
 .lista-baixo p{
     padding-bottom: 6px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
-    border-bottom: solid 1px #5B0B9B;
+    border-bottom: solid 1px var(--cor-primaria);
 }
 .lista-baixo .idioma-lista{
     padding: 6px 0;
-    border-bottom: solid 1px #5B0B9B;
+    border-bottom: solid 1px var(--cor-primaria);
 }
 .lista-baixo.mostrar{
     display: block;
@@ -159,7 +166,29 @@ footer{
 }
 .audio {
     display: none;
+    transition-duration: 0.5s;
+    cursor: pointer;
 }
 .audio.mostrar{
+    height: 40px;
     display: flex;
+    background-color: aliceblue;
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    justify-content: center;
+    align-items: center;
+    border: var(--cor-primaria) 1px solid;
+}
+.audio img{
+    height: 60%;
+}
+.audio:hover{
+    background-color: #b59fc7;
+}
+
+.nome-idioma{
+    color: var(--cor-primaria);
+    text-align: end;
+    width: 36vw;
+    padding: 6px;
 }
